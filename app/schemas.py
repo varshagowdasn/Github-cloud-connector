@@ -19,14 +19,6 @@ class Repository(BaseModel):
     updated_at: str
 
 
-
-class IssueCreate(BaseModel):
-    title: str = Field(..., min_length=1, description="Issue title")
-    body: Optional[str] = Field(None, description="Issue body / description")
-    labels: list[str] = Field(default_factory=list, description="Label names to attach")
-    assignees: list[str] = Field(default_factory=list, description="GitHub usernames to assign")
-
-
 class Issue(BaseModel):
     number: int
     title: str

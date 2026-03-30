@@ -25,18 +25,6 @@ async def github_get(path: str, params: dict | None = None) -> dict | list:
     return response.json()
 
 
-async def github_post(path: str, payload: dict) -> dict:
-    """Perform an authenticated POST against the GitHub API."""
-    settings = get_settings()
-    url = f"{settings.github_api_base}{path}"
-
-    async with httpx.AsyncClient() as client:
-        response = await client.post(url, headers=_auth_headers(), json=payload)
-
-    _raise_for_github_error(response)
-    return response.json()
-
-
 def _raise_for_github_error(response: httpx.Response) -> None:
     """Map GitHub HTTP errors to meaningful FastAPI HTTP exceptions."""
     if response.is_success:
