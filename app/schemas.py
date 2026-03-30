@@ -4,7 +4,6 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
-# ── Repositories ──────────────────────────────────────────────────────────────
 
 class Repository(BaseModel):
     id: int
@@ -20,7 +19,6 @@ class Repository(BaseModel):
     updated_at: str
 
 
-# ── Issues ────────────────────────────────────────────────────────────────────
 
 class IssueCreate(BaseModel):
     title: str = Field(..., min_length=1, description="Issue title")
@@ -53,7 +51,6 @@ class Issue(BaseModel):
         )
 
 
-# ── Commits ───────────────────────────────────────────────────────────────────
 
 class Commit(BaseModel):
     sha: str

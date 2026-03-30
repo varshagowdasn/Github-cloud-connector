@@ -56,7 +56,6 @@ The API will be available at **http://localhost:8000/docs**.
 ### Health
 
 | Method | Path | Description |
-|---|---|---|
 | `GET` | `/` | Health check |
 
 ---
@@ -64,39 +63,18 @@ The API will be available at **http://localhost:8000/docs**.
 ### Repositories — `/repos`
 
 | Method | Path | Description |
-|---|---|---|
 | `GET` | `/repos/user/{username}` | List a user's repositories |
 | `GET` | `/repos/org/{org}` | List an organisation's repositories |
 | `GET` | `/repos/{owner}/{repo}` | Fetch a single repository |
 
-**Query parameters (list endpoints)**
-
-| Param | Default | Description |
-|---|---|---|
-| `per_page` | `30` | Results per page (max 100) |
-| `page` | `1` | Page number |
-
-**Example**
-```
-GET /repos/user/torvalds?per_page=5
-```
 
 ---
 
 ### Issues — `/issues`
 
 | Method | Path | Description |
-|---|---|---|
 | `GET` | `/issues/{owner}/{repo}` | List issues in a repository |
 | `GET` | `/issues/{owner}/{repo}/{issue_number}` | Get a specific issue |
-
-**List query parameters**
-
-| Param | Default | Options |
-|---|---|---|
-| `state` | `open` | `open`, `closed`, `all` |
-| `per_page` | `30` | 1–100 |
-| `page` | `1` | — |
 
 
 ---
@@ -104,20 +82,5 @@ GET /repos/user/torvalds?per_page=5
 ### Commits — `/commits`
 
 | Method | Path | Description |
-|---|---|---|
 | `GET` | `/commits/{owner}/{repo}` | List commits in a repository |
 
-**Query parameters**
-
-| Param | Default | Description |
-|---|---|---|
-| `branch` | *(default branch)* | Branch name or SHA |
-| `per_page` | `30` | Results per page |
-| `page` | `1` | Page number |
-
-**Example**
-```
-GET /commits/torvalds/linux?branch=master&per_page=10
-```
-
----
