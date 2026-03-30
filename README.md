@@ -3,8 +3,20 @@
 ## Prerequisites
 
 - Python 3.11+
-- A GitHub Personal Access Token ([create one here](https://github.com/settings/tokens))
-  - Minimum scope: `public_repo` for public repos, `repo` for private repos + issue creation
+- A GitHub Personal Access Token ([create one here by following below steps])
+   — Generate a PAT on GitHub
+
+     1. Go to github.com → click your profile picture (top right) → Settings
+     2. Scroll down to Developer settings (bottom of left sidebar)
+     3. Click Personal access tokens → Tokens (classic)
+     4. Click Generate new token → Generate new token (classic)
+     5. Fill in:
+        Note: github-connector (just a label for yourself)
+        Expiration: 30 days / 90 days / No expiration
+        Scopes: tick repo (covers everything — public + private repos, issues, etc.)
+     6. Click Generate token
+     7. Copy it and save it so that we can paste in .env file
+ 
 
 ---
 
@@ -12,19 +24,19 @@
 
 ```command prompt
 # 1. Clone the repository
-git clone https://github.com/<your-handle>/github-connector.git
+https://github.com/varshagowdasn/Github-cloud-connector.git
 cd Github-Cloud-Connector
 
 # 2. Create and activate a virtual environment
-python -m venv .venv
-source .venv/bin/activate        # Windows: .venv\Scripts\activate
+python -m venv virtual_env
+source virtual_env\Scripts\Activate       
 
 # 3. Install dependencies
 pip install -r requirements.txt
 
 # 4. Configure environment variables
-cp .env.example .env
-# Edit .env and set GITHUB_PAT=ghp_...
+create a file named .env
+copy the contents of env.example file and then paste the generated access token(PAT) here.
 ```
 
 ---
@@ -35,9 +47,7 @@ cp .env.example .env
 uvicorn app.main:app --reload
 ```
 
-The API will be available at **http://localhost:8000**.
-
-Interactive docs → **http://localhost:8000/docs**
+The API will be available at **http://localhost:8000/docs**.
 
 ---
 
@@ -78,7 +88,6 @@ GET /repos/user/torvalds?per_page=5
 | Method | Path | Description |
 |---|---|---|
 | `GET` | `/issues/{owner}/{repo}` | List issues in a repository |
-| `POST` | `/issues/{owner}/{repo}` | Create a new issue |
 | `GET` | `/issues/{owner}/{repo}/{issue_number}` | Get a specific issue |
 
 **List query parameters**
@@ -89,22 +98,6 @@ GET /repos/user/torvalds?per_page=5
 | `per_page` | `30` | 1–100 |
 | `page` | `1` | — |
 
-**Create issue — request body**
-```json
-{
-  "title": "Bug: something is broken",
-  "body": "Steps to reproduce...",
-  "labels": ["bug"],
-  "assignees": ["octocat"]
-}
-```
-
-**Examples**
-```
-GET  /issues/octocat/Hello-World?state=all
-POST /issues/octocat/Hello-World
-GET  /issues/octocat/Hello-World/1
-```
 
 ---
 
@@ -128,50 +121,3 @@ GET /commits/torvalds/linux?branch=master&per_page=10
 ```
 
 ---
-
-## Project Structure
-
-```
-github-connector/
-├── app/
-│   ├── main.py                  # FastAPI app + router registration
-│   ├── core/
-│   │   ├── config.py            # Settings loaded from .env
-│   │   └── github_client.py     # Authenticated HTTP client
-│   ├── models/
-│   │   └── schemas.py           # Pydantic request/response models
-│   ├── routers/
-│   │   ├── repos.py             # /repos endpoints
-│   │   ├── issues.py            # /issues endpoints
-│   │   └── commits.py           # /commits endpoints
-│   └── services/
-│       ├── repo_service.py      # Repository business logic
-│       ├── issue_service.py     # Issue business logic
-│       └── commit_service.py    # Commit business logic
-├── .env.example
-├── .gitignore
-├── requirements.txt
-└── README.md
-```
-
----
-
-## Error Handling
-
-All GitHub API errors are mapped to meaningful HTTP status codes:
-
-| GitHub status | Connector response | Meaning |
-|---|---|---|
-| 401 | `401 Unauthorized` | Invalid or missing PAT |
-| 403 | `403 Forbidden` | Insufficient token scope |
-| 404 | `404 Not Found` | Repo / user / issue doesn't exist |
-| 422 | `422 Unprocessable Entity` | Invalid request payload |
-| Other | `502 Bad Gateway` | Unexpected GitHub error |
-
----
-
-## Security Notes
-
-- The PAT is read exclusively from the `GITHUB_PAT` environment variable via `pydantic-settings`.
-- `.env` is listed in `.gitignore` — it should **never** be committed.
-- The token is sent over HTTPS only (GitHub enforces this).
