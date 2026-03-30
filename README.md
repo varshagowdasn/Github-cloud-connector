@@ -43,8 +43,9 @@ copy the contents of env.example file and then paste the generated access token(
 
 ## Running the server
 
-```bash
-uvicorn app.main:app --reload
+```command prompt
+Inside the Folder Github-Connector run below command :
+  uvicorn app.main:app
 ```
 
 The API will be available at **http://localhost:8000/docs**.
