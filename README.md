@@ -15,7 +15,7 @@
         Expiration: 30 days / 90 days / No expiration
         Scopes: tick repo (covers everything — public + private repos, issues, etc.)
      6. Click Generate token
-     7. Copy it and save it so that we can paste in .env file
+     7. Copy it and save it so that we can paste in .env file later
  
 
 ---
@@ -24,8 +24,8 @@
 
 ```command prompt
 # 1. Clone the repository
-https://github.com/varshagowdasn/Github-cloud-connector.git
-cd Github-Cloud-Connector
+run the command : git clone https://github.com/varshagowdasn/Github-cloud-connector.git
+run the command : cd Github-Cloud-Connector
 
 # 2. Create and activate a virtual environment
 python -m venv virtual_env
