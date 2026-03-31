@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Query
 from typing import Literal
 
-from app.schemas import Issue, IssueCreate
+from app.schemas import Issue
 from app.services import issue_service
 
 router = APIRouter()

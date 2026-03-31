@@ -29,7 +29,7 @@ cd Github-Cloud-Connector
 
 # 2. Create and activate a virtual environment
 python -m venv virtual_env
-source virtual_env\Scripts\Activate       
+activate using :  virtual_env\Scripts\Activate       
 
 # 3. Install dependencies
 pip install -r requirements.txt
